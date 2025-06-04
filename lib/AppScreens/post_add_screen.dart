@@ -217,7 +217,7 @@ class _PublishAdScreenState extends State<PublishAdScreen> {
                               controller: price,
                               style: TextStyle(color: const Color(0xFFF5F5F5), fontSize: 14.sp),
                               decoration: InputDecoration(
-                                hintText: "! cr 20 lac",
+                                hintText: "1 cr 20 lac",
                                 hintStyle: TextStyle(color: const Color(0xFFA1A1A1), fontSize: 14.sp),
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 18.h),

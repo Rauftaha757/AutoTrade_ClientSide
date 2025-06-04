@@ -162,61 +162,64 @@ class MyWidget extends StatelessWidget {
                     SizedBox(
                       height: 20.h,
                     ),
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
+                    Padding(
+                      padding:  EdgeInsets.all(8.r),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
 
-                        Container(
-                          height: 40.h,
-                          width: 100.w,
-                          decoration: BoxDecoration(
-                              color: Colors.black54,
-                              borderRadius: BorderRadius.circular(21.r)
+                          Container(
+                            height: 40.h,
+                            width: 100.w,
+                            decoration: BoxDecoration(
+                                color: Colors.black54,
+                                borderRadius: BorderRadius.circular(21.r)
+                            ),
+                            child:Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Icon(Icons.add_road_outlined,color: Colors.white,),
+                                Text("354km",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 10.sp,color: Colors.white)),
+                              ],
+                            ),
                           ),
-                          child:Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Icon(Icons.add_road_outlined,color: Colors.white,),
-                              Text("354km",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 10.sp,color: Colors.white)),
-                            ],
+
+
+
+
+                          Container(
+                            height: 40.h,
+                            width: 100.w,
+                            decoration: BoxDecoration(
+                                color: Colors.black54,
+                                borderRadius: BorderRadius.circular(21.r)
+                            ),
+                            child:Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Icon(Icons.color_lens, color: Colors.white),
+                                Text("Black",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 10.sp,color: Colors.white)),
+                              ],
+                            ),
                           ),
-                        ),
 
 
-
-
-                        Container(
-                          height: 40.h,
-                          width: 100.w,
-                          decoration: BoxDecoration(
-                              color: Colors.black54,
-                              borderRadius: BorderRadius.circular(21.r)
+                          Container(
+                            height: 40.h,
+                            width: 100.w,
+                            decoration: BoxDecoration(
+                                color: Colors.black54,
+                                borderRadius: BorderRadius.circular(21.r)
+                            ),
+                            child:Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Icon(Icons.speed, color: Colors.white),
+                                Text("1200cc",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 10.sp,color: Colors.white)),
+                              ],
+                            ),
                           ),
-                          child:Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Icon(Icons.color_lens, color: Colors.white),
-                              Text("Black",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 10.sp,color: Colors.white)),
-                            ],
-                          ),
-                        ),
-
-
-                        Container(
-                          height: 40.h,
-                          width: 100.w,
-                          decoration: BoxDecoration(
-                              color: Colors.black54,
-                              borderRadius: BorderRadius.circular(21.r)
-                          ),
-                          child:Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Icon(Icons.speed, color: Colors.white),
-                              Text("1200cc",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 10.sp,color: Colors.white)),
-                            ],
-                          ),
-                        ),
-                      ],)
+                        ],),
+                    )
 
 
 
