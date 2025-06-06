@@ -9,6 +9,7 @@ import 'package:pakwheels/providers/Car_ad_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/search_provider.dart';
+import 'cardetails page.dart';
 
 class CarListingPage extends StatefulWidget {
   @override
@@ -43,7 +44,7 @@ class _CarListingPage extends State<CarListingPage> {
 
     final List<String> carCompanies = [
       'Toyota', 'Honda', 'Suzuki', 'Hyundai', 'Kia', 'Nissan', 'Mazda', 'Chevrolet', 'BMW',
-      'Mercedes-Benz', 'Audi', 'Lexus', 'Mitsubishi', 'Daihatsu', 'Subaru', 'Isuzu', 'Changan',
+      'Mercedez', 'Audi', 'Lexus', 'Mitsubishi', 'Daihatsu', 'Subaru', 'Isuzu', 'Changan',
       'FAW', 'Proton', 'Geely', 'Peugeot', 'Renault', 'Fiat', 'Ford', 'Volkswagen', 'Skoda',
       'Tesla', 'Genesis', 'Buick', 'Cadillac', 'Chrysler', 'Dodge', 'Jeep', 'Lincoln', 'Mini',
       'Opel', 'Volvo', 'RAM', 'Saab', 'Seat', 'Hummer', 'Pontiac', 'Scion', 'Smart', 'Tata',
@@ -63,6 +64,20 @@ class _CarListingPage extends State<CarListingPage> {
       'Gujrat', 'Sahiwal', 'Nawabshah', 'Mirpur', 'Kotli',
       'Muzaffarabad', 'Gilgit', 'Skardu',
     ];
+    Future<void> _refreshAds() async {
+      setState(() {
+        isLoading = true;
+        flagserach = false;
+        carnameController.clear();
+        companyController.clear();
+        engineccController.clear();
+        cityController.clear();
+      });
+      await Provider.of<CarAdProvider>(context, listen: false).fetchAds(context);
+      setState(() {
+        isLoading = false;
+      });
+    }
 
     void runSearch() {
       final searchProvider = Provider.of<SearchProvider>(context, listen: false);
@@ -73,9 +88,7 @@ class _CarListingPage extends State<CarListingPage> {
         enginecapacity: engineccController.text.trim(),
         context: context,
       );
-      setState(() {
-        flagserach=false;
-      });
+      flagserach=!flagserach;
     }
     final addlist = Provider.of<CarAdProvider>(context).ads;
     final searchProvider = Provider.of<SearchProvider>(context);
@@ -340,173 +353,189 @@ SingleChildScrollView(
         )
             : Padding(
           padding: EdgeInsets.all(8.r),
-          child: ListView.builder(
-            itemCount: searchResults.isEmpty
-                ? addlist.length
-                : searchResults.length,
-            itemBuilder: (context, index) {
-              final ad = searchResults.isEmpty
-                  ? addlist[index]
-                  : searchResults[index];
-    return Center(
-    child: Padding(
-    padding: EdgeInsets.symmetric(vertical: 8.h),
-    child: Container(
-    width: 350.w,
-    decoration: BoxDecoration(
-    color: const Color(0xff1E1E1E),
-    borderRadius: BorderRadius.circular(21.r),
-    ),
-    child: Column(
-    children: [
-    ClipRRect(
-    borderRadius: BorderRadius.only(
-    topLeft: Radius.circular(21.r),
-    topRight: Radius.circular(21.r),
-    ),
-    child: SizedBox(
-    width: 350.w,
-    height: 200.h,
-    child: ad.imageurl.isEmpty || ad.imageurl[0].isEmpty
-    ? Center(
-    child: Icon(Icons.image, color: Colors.grey),
-    )
-        : Image.network(
-    ad.imageurl[0],
-    fit: BoxFit.cover,
-    loadingBuilder: (context, child, loadingProgress) {
-    if (loadingProgress == null) return child;
-    return Center(
-    child: SpinKitCircle(
-    color: Colors.white,
-    size: 30.sp,
-    ),
-    );
-    },
-    errorBuilder: (context, error, stackTrace) {
-    return Center(
-    child: Icon(
-    Icons.broken_image,
-    size: 40.sp,
-    color: Colors.red,
-    ),
-    );
-    },
-    ),
-    ),
-    ),
-    SizedBox(height: 12.h),
-    Padding(
-    padding: EdgeInsets.only(left: 12.w, top: 4.h),
-    child: Align(
-    alignment: Alignment.centerLeft,
-    child: Text(
-    "${ad.company} ${ad.carname}",
-    style: TextStyle(
-    fontWeight: FontWeight.w500,
-    fontSize: 22.sp,
-    color: const Color(0xFFF5F5F5),
-    ),
-    ),
-    ),
-    ),
-    Padding(
-    padding: EdgeInsets.only(left: 12.w, top: 4.h),
-    child: Align(
-    alignment: Alignment.centerLeft,
-    child: Text(
-    "${ad.price}",
-    style: TextStyle(
-    fontWeight: FontWeight.w500,
-    fontSize: 16.sp,
-    color: const Color(0xFFF5F5F5),
-    ),
-    ),
-    ),
-    ),
-    SizedBox(height: 12.h),
-    Padding(
-    padding: EdgeInsets.symmetric(horizontal: 8.w),
-    child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: [
-    Container(
-    height: 40.h,
-    width: 100.w,
-    decoration: BoxDecoration(
-    color: Colors.black54,
-    borderRadius: BorderRadius.circular(21.r),
-    ),
-    child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: [
-    Icon(Icons.add_road_outlined, color: Colors.white, size: 16.sp),
-    Text(
-    "${ad.milage} Km",
-    style: TextStyle(
-    fontWeight: FontWeight.w500,
-    fontSize: 10.sp,
-    color: Colors.white,
-    ),
-    ),
-    ],
-    ),
-    ),
-    Container(
-    height: 40.h,
-    width: 100.w,
-    decoration: BoxDecoration(
-    color: Colors.black54,
-    borderRadius: BorderRadius.circular(21.r),
-    ),
-    child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: [
-    Icon(Icons.color_lens, color: Colors.white, size: 16.sp),
-    Text(
-    ad.color.toUpperCase(),
-    style: TextStyle(
-    fontWeight: FontWeight.w500,
-    fontSize: 10.sp,
-    color: Colors.white,
-    ),
-    ),
-    ],
-    ),
-    ),
-    Container(
-    height: 40.h,
-    width: 100.w,
-    decoration: BoxDecoration(
-    color: Colors.black54,
-    borderRadius: BorderRadius.circular(21.r),
-    ),
-    child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: [
-    Icon(Icons.speed, color: Colors.white, size: 16.sp),
-    Text(
-    "${ad.enginecapacity}cc",
-    style: TextStyle(
-    fontWeight: FontWeight.w500,
-    fontSize: 10.sp,
-    color: Colors.white,
-    ),
-    ),
-    ],
-    ),
-    ),
-    ],
-    ),
-    ),
-    SizedBox(height: 12.h),
-    ],
-    ),
-    ),
-    ),
-    );
-    },
-    ),
+          child: RefreshIndicator(
+            onRefresh: _refreshAds,
+            child: ListView.builder(
+              itemCount: searchResults.isEmpty
+                  ? addlist.length
+                  : searchResults.length,
+              itemBuilder: (context, index) {
+                final ad = searchResults.isEmpty
+                    ? addlist[index]
+                    : searchResults[index];
+                return Center(
+                child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.h),
+                child: GestureDetector(
+                  onTap: (){
+
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                    Detailspage(imageurl: ad.imageurl, transmition: ad.transmition, milage: ad.milage, model: ad.model, registration: ad.registration, carname: ad.carname, company: ad.company, enginecapacity: ad.enginecapacity, city: ad.city, color: ad.color, assembly: ad.assembly, createdAt: ad.createdAt, contact: ad.contact, price: ad.price)
+                    ));
+
+                  },
+
+                  child: Container(
+                  width: 350.w,
+                  decoration: BoxDecoration(
+                  color: const Color(0xff1E1E1E),
+                  borderRadius: BorderRadius.circular(21.r),
+                  ),
+                  child: Column(
+                  children: [
+                  ClipRRect(
+                  borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(21.r),
+                  topRight: Radius.circular(21.r),
+                  ),
+                  child: SizedBox(
+                  width: 350.w,
+                  height: 200.h,
+                  child: ad.imageurl.isEmpty || ad.imageurl[0].isEmpty
+                  ? Center(
+                  child: Icon(Icons.image, color: Colors.grey),
+                  )
+            : Hero(
+                    tag: ad.imageurl[0],
+              child: Image.network(
+                    ad.imageurl[0],
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                    child: SpinKitCircle(
+                    color: Colors.white,
+                    size: 30.sp,
+                    ),
+                    );
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                    return Center(
+                    child: Icon(
+                    Icons.broken_image,
+                    size: 40.sp,
+                    color: Colors.red,
+                    ),
+                    );
+                    },
+                    ),
+            ),
+                  ),
+                  ),
+                  SizedBox(height: 12.h),
+                  Padding(
+                  padding: EdgeInsets.only(left: 12.w, top: 4.h),
+                  child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                  "${ad.company} ${ad.carname}",
+                  style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 22.sp,
+                  color: const Color(0xFFF5F5F5),
+                  ),
+                  ),
+                  ),
+                  ),
+                  Padding(
+                  padding: EdgeInsets.only(left: 12.w, top: 4.h),
+                  child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                  "${ad.price}",
+                  style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.sp,
+                  color: const Color(0xFFF5F5F5),
+                  ),
+                  ),
+                  ),
+                  ),
+                  SizedBox(height: 12.h),
+                  Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                  child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                  Container(
+                  height: 40.h,
+                  width: 100.w,
+                  decoration: BoxDecoration(
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.circular(21.r),
+                  ),
+                  child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                  Icon(Icons.add_road_outlined, color: Colors.white, size: 16.sp),
+                  Text(
+                  "${ad.milage} Km",
+                  style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 10.sp,
+                  color: Colors.white,
+                  ),
+                  ),
+                  ],
+                  ),
+                  ),
+                  Container(
+                  height: 40.h,
+                  width: 100.w,
+                  decoration: BoxDecoration(
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.circular(21.r),
+                  ),
+                  child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                  Icon(Icons.color_lens, color: Colors.white, size: 16.sp),
+                  Text(
+                  ad.color.toUpperCase(),
+                  style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 10.sp,
+                  color: Colors.white,
+                  ),
+                  ),
+                  ],
+                  ),
+                  ),
+                  Container(
+                  height: 40.h,
+                  width: 100.w,
+                  decoration: BoxDecoration(
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.circular(21.r),
+                  ),
+                  child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                  Icon(Icons.speed, color: Colors.white, size: 16.sp),
+                  Text(
+                  "${ad.enginecapacity}cc",
+                  style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 10.sp,
+                  color: Colors.white,
+                  ),
+                  ),
+                  ],
+                  ),
+                  ),
+                  ],
+                  ),
+                  ),
+                  SizedBox(height: 12.h),
+                  ],
+                  ),
+                  ),
+                ),
+                ),
+                );
+                },
+                ),
+          ),
     ),
     ),
     ],
