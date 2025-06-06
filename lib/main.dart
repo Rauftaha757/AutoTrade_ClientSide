@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pakwheels/AppScreens/cardetails%20page.dart';
 import 'package:pakwheels/AppScreens/demo%20project.dart';
 import 'package:pakwheels/AppScreens/post_add_screen.dart';
 import 'package:pakwheels/providers/Car_ad_provider.dart';

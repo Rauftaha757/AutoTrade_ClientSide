@@ -9,7 +9,7 @@ import 'package:pakwheels/providers/Car_ad_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/search_provider.dart';
-import 'cardetails page.dart';
+import 'cardetailspage.dart';
 
 class CarListingPage extends StatefulWidget {
   @override
