@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pakwheels/AppScreens/Intro_Page.dart';
+import 'package:pakwheels/AppScreens/SignUp.dart';
 import 'package:pakwheels/AppScreens/demo%20project.dart';
 import 'package:pakwheels/providers/Car_ad_provider.dart';
 import 'package:pakwheels/providers/User_Provider.dart';
@@ -7,11 +9,11 @@ import 'package:pakwheels/providers/search_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'AppScreens/car_listing.dart';
-import 'AppScreens/search_page.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); //
+  await Firebase.initializeApp();
+
   runApp(
     MultiProvider(
       providers: [
@@ -37,7 +39,7 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Poppins',
           ),
           debugShowCheckedModeBanner: false,
-          home: CarListingPage(),
+          home: IntroPage(),
         );
       },
     );

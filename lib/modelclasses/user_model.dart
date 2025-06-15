@@ -26,7 +26,6 @@ class UserModel {
     );
   }
 
-  /// Converts UserModel to a JSON-compatible map
   Map<String, dynamic> toMap() {
     return {
       'name': name,
@@ -37,10 +36,9 @@ class UserModel {
     };
   }
 
-  /// Converts UserModel to a JSON string
+
   String toJsonString() => jsonEncode(toMap());
 
-  /// Creates a UserModel from a JSON string
   static UserModel fromJsonString(String jsonString) {
     return UserModel.fromJson(jsonDecode(jsonString));
   }
