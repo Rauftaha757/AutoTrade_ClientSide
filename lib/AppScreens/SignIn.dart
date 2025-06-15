@@ -6,6 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'SignUp.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import 'car_listing.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -36,6 +38,7 @@ ApiServices apiServices=ApiServices();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text("Logged in successfully")));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>CarListingPage()));
         }
       }
     } catch (err) {
