@@ -6,6 +6,8 @@ import 'package:pakwheels/modelclasses/car_ad_model.dart';
 import 'package:pakwheels/providers/Car_ad_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'cardetails page.dart';
+
 class CarListingPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -48,7 +50,15 @@ class _CarListingPage extends State<CarListingPage> {
         padding: const EdgeInsets.all(8.0),
         child: ListView.builder(itemCount: addlist.length,itemBuilder: (context,index){
           final ad= addlist[index];
-          return   Center(
+          return   GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Detailspage(car: ad),
+                ),
+              );
+            },
             child: Container(
                 width: 350.w,
                 height: 350.h,
