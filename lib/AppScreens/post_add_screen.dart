@@ -110,7 +110,11 @@ class _PublishAdScreenState extends State<PublishAdScreen> {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.arrow_back, color: Colors.white, size: 24.sp),
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.pop(context);
+                      },
+                        child: Icon(Icons.arrow_back, color: Colors.white, size: 24.sp)),
                     SizedBox(width: 12.w),
                     Text(
                       "Create Ad",

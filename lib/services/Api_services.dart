@@ -7,8 +7,8 @@ import '../providers/User_Provider.dart';
 
 class ApiServices {
   final storage = FlutterSecureStorage();
-  static const String baseurl = "http://10.0.2.2:3000"; // ✅ Emulator base URL
-
+  // static const String baseurl = "http://10.0.2.2:3000"; // ✅ Emulator base URL
+  static const String baseurl = "http://192.168.18.62:3000";
   /// Signup API
   Future<Map<String, dynamic>> signup(String name, String email, String password) async {
     final url = Uri.parse("$baseurl/api/signup");
@@ -78,35 +78,35 @@ class ApiServices {
       };
     }
   }
-
-  /// Verify token (for persistent login)
-  Future<bool> isLoggedIn(BuildContext context) async {
-    final token = await storage.read(key: "jwt_key");
-    if (token == null) return false;
-
-    final url = Uri.parse("$baseurl/api/verifyToken");
-
-    try {
-      final response = await http.get(
-        url,
-        headers: {"Authorization": "Bearer $token"},
-      );
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        Provider.of<UserProvider>(context, listen: false).setUserFromJson(data);
-        return true;
-      } else {
-        await logout(); // Token invalid or expired
-        return false;
-      }
-    } catch (e) {
-      return false;
-    }
-  }
-
-  /// Logout - clears secure token
-  Future<void> logout() async {
-    await storage.delete(key: "jwt_key");
-  }
+  //
+  // /// Verify token (for persistent login)
+  // Future<bool> isLoggedIn(BuildContext context) async {
+  //   final token = await storage.read(key: "jwt_key");
+  //   if (token == null) return false;
+  //
+  //   final url = Uri.parse("$baseurl/api/verifyToken");
+  //
+  //   try {
+  //     final response = await http.get(
+  //       url,
+  //       headers: {"Authorization": "Bearer $token"},
+  //     );
+  //
+  //     if (response.statusCode == 200) {
+  //       final data = jsonDecode(response.body);
+  //       Provider.of<UserProvider>(context, listen: false).setUserFromJson(data);
+  //       return true;
+  //     } else {
+  //       await logout(); // Token invalid or expired
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     return false;
+  //   }
+  // }
+  //
+  // /// Logout - clears secure token
+  // Future<void> logout() async {
+  //   await storage.delete(key: "jwt_key");
+  // }
 }
