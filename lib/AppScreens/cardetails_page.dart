@@ -13,6 +13,20 @@ class Detailspage extends StatefulWidget {
 }
 
 class _DetailspageState extends State<Detailspage> {
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _precacheImages();
+    });
+  }
+
+
+  void _precacheImages() {
+    for (var imageUrl in widget.car.imageurl) {
+      precacheImage(NetworkImage(imageUrl), context);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,36 +81,92 @@ class _DetailspageState extends State<Detailspage> {
                     ),
                   ),
                   SizedBox(height: 16.h),
-                  _buildInfoRow("Model", "${widget.car.model}"),
-                  _buildInfoRow("Engine", "${widget.car.enginecapacity}cc"),
-                  _buildInfoRow("Transmission", widget.car.transmition),
-                  _buildInfoRow("Mileage", "${widget.car.milage} km"),
-                  _buildInfoRow("Color", widget.car.color),
-                  _buildInfoRow("City", widget.car.city),
-                  _buildInfoRow("Assembly", widget.car.assembly),
-                  _buildInfoRow("Registration", widget.car.registration),
-                  SizedBox(height: 16.h),
-             Row(
-               mainAxisAlignment: MainAxisAlignment.spaceAround,
-               children: [
-                 Text(
-                   "Contact Seller",
-                   style: TextStyle(
-                     color: Colors.white,
-                     fontSize: 18.sp,
-                     fontWeight: FontWeight.bold,
-                   ),
-                 ),
-                 SizedBox(height: 8.h),
-                 Text(
-                   widget.car.contact,
-                   style: TextStyle(
-                     color: Colors.white,
-                     fontSize: 16.sp,
-                   ),
-                 ),
-               ],
-             ),
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
+                    padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 20.w),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1E1E1E),
+                      borderRadius: BorderRadius.circular(21.r),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          blurRadius: 8,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Car Information",
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.orangeAccent,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 12.h),
+                        _buildInfoRow("Model", "${widget.car.model}"),
+                        _buildInfoRow("Engine", "${widget.car.enginecapacity}cc"),
+                        _buildInfoRow("Transmission", widget.car.transmition),
+                        _buildInfoRow("Mileage", "${widget.car.milage} km"),
+                        _buildInfoRow("Color", widget.car.color),
+                        _buildInfoRow("City", widget.car.city),
+                        _buildInfoRow("Assembly", widget.car.assembly),
+                        _buildInfoRow("Registration", widget.car.registration),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(height: 8.h),
+
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
+                    padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 20.w),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1E1E1E),
+                      borderRadius: BorderRadius.circular(21.r),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          blurRadius: 8,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Contact Seller",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          widget.car.contact,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+
                 ],
               ),
             ),
