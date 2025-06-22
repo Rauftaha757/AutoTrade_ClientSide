@@ -7,7 +7,7 @@ import 'package:pakwheels/modelclasses/car_ad_model.dart';
 import 'package:pakwheels/providers/Car_ad_provider.dart';
 import 'package:provider/provider.dart';
 class CarAd_apiservice {
-  static final baseurl =  "http://192.168.18.62:3000";
+  static final baseurl = "https://autotradeserverside-production-2eba.up.railway.app";
   static Future<void> publishad(BuildContext context,CarAd_model CarAd_model)async {
     final url =Uri.parse("${baseurl}/api/publishAd");
   try  {
