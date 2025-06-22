@@ -7,8 +7,7 @@ import '../providers/User_Provider.dart';
 
 class ApiServices {
   final storage = FlutterSecureStorage();
-  // static const String baseurl = "http://10.0.2.2:3000"; // ✅ Emulator base URL
-  static const String baseurl = "http://192.168.18.62:3000";
+  static final baseurl = "https://autotradeserverside-production-2eba.up.railway.app";
   /// Signup API
   Future<Map<String, dynamic>> signup(String name, String email, String password) async {
     final url = Uri.parse("$baseurl/api/signup");
