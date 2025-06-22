@@ -238,7 +238,7 @@ setState(() {
                       Container(
                         height: 1.h,
                         color: Colors.white,
-                        child: Text("-------------"),
+                        child: Text("--------"),
                       )
                     ],
                   ),
