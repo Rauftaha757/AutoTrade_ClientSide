@@ -9,6 +9,8 @@ import 'package:pakwheels/modelclasses/car_ad_model.dart';
 import 'package:pakwheels/providers/Car_ad_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:pakwheels/services/CarAd_api.dart';
+import 'package:pakwheels/services/Api_services.dart';
+import 'package:pakwheels/AppScreens/SignIn.dart';
 
 import 'cardetails_page.dart';
 
@@ -156,9 +158,53 @@ class _CarListingPage extends State<CarListingPage> {
                   
                   // Person Info Icon
                   IconButton(
-                    onPressed: () {
-                      // Add profile navigation here
-                      print("Profile clicked");
+                    onPressed: () async {
+                      // Show logout confirmation dialog
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            backgroundColor: Color(0xFF2A2A2A),
+                            title: Text(
+                              "Logout",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            content: Text(
+                              "Are you sure you want to logout?",
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  Navigator.of(context).pop();
+                                  // Perform logout
+                                  final api = ApiServices();
+                                  await api.logout();
+                                  // Navigate to login page
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => LoginPage()),
+                                    (route) => false,
+                                  );
+                                },
+                                child: Text(
+                                  "Logout",
+                                  style: TextStyle(color: Colors.orange),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
                     icon: Icon(Icons.person, color: Colors.white, size: 24.sp),
                   ),
@@ -350,6 +396,7 @@ class _CarListingPage extends State<CarListingPage> {
                       : Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ListView.builder(
+                            padding: EdgeInsets.only(bottom: 20.h),
                             itemCount: addlist.length,
                             itemBuilder: (context, index) {
                               final ad = addlist[index];
@@ -366,12 +413,12 @@ class _CarListingPage extends State<CarListingPage> {
                                   },
                                   child: Container(
                                     width: 350.w,
-                                    height: 350.h,
                                     decoration: BoxDecoration(
                                       color: Color(0xff1E1E1E),
                                       borderRadius: BorderRadius.circular(21.r),
                                     ),
                                     child: Column(
+                                      mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Center(
                                           child: ClipRRect(
@@ -389,7 +436,7 @@ class _CarListingPage extends State<CarListingPage> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 20.h),
+                                        SizedBox(height: 16.h),
                                         Padding(
                                           padding: EdgeInsets.only(top: 4.r, left: 10.r),
                                           child: Align(
@@ -418,78 +465,96 @@ class _CarListingPage extends State<CarListingPage> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 20.h),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Container(
-                                              height: 40.h,
-                                              width: 100.w,
-                                              decoration: BoxDecoration(
-                                                color: Colors.black54,
-                                                borderRadius: BorderRadius.circular(21.r)
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                children: [
-                                                  Icon(Icons.add_road_outlined, color: Colors.white),
-                                                  Text(
-                                                    "${ad.milage}Km",
-                                                    style: TextStyle(
-                                                      fontWeight: FontWeight.w500,
-                                                      fontSize: 10.sp,
-                                                      color: Colors.white
+                                        SizedBox(height: 16.h),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 10.r, vertical: 8.h),
+                                          child: Wrap(
+                                            spacing: 8.w,
+                                            runSpacing: 8.h,
+                                            children: [
+                                              Container(
+                                                width: (MediaQuery.of(context).size.width - 48.w) / 3,
+                                                height: 40.h,
+                                                padding: EdgeInsets.symmetric(horizontal: 6.w),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.black54,
+                                                  borderRadius: BorderRadius.circular(21.r),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Icon(Icons.add_road_outlined, color: Colors.white, size: 16.sp),
+                                                    SizedBox(width: 4.w),
+                                                    Expanded(
+                                                      child: Text(
+                                                        "${ad.milage}Km",
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: TextStyle(
+                                                          fontWeight: FontWeight.w500,
+                                                          fontSize: 10.sp,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            Container(
-                                              height: 40.h,
-                                              width: 100.w,
-                                              decoration: BoxDecoration(
-                                                color: Colors.black54,
-                                                borderRadius: BorderRadius.circular(21.r)
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                children: [
-                                                  Icon(Icons.color_lens, color: Colors.white),
-                                                  Text(
-                                                    "${ad.color.toUpperCase()}",
-                                                    style: TextStyle(
-                                                      fontWeight: FontWeight.w500,
-                                                      fontSize: 10.sp,
-                                                      color: Colors.white
+                                              Container(
+                                                width: (MediaQuery.of(context).size.width - 48.w) / 3,
+                                                height: 40.h,
+                                                padding: EdgeInsets.symmetric(horizontal: 6.w),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.black54,
+                                                  borderRadius: BorderRadius.circular(21.r),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(Icons.color_lens, color: Colors.white, size: 16.sp),
+                                                    SizedBox(width: 4.w),
+                                                    Expanded(
+                                                      child: Text(
+                                                        "${ad.color.toUpperCase()}",
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: TextStyle(
+                                                          fontWeight: FontWeight.w500,
+                                                          fontSize: 10.sp,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            Container(
-                                              height: 40.h,
-                                              width: 100.w,
-                                              decoration: BoxDecoration(
-                                                color: Colors.black54,
-                                                borderRadius: BorderRadius.circular(21.r)
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                children: [
-                                                  Icon(Icons.speed, color: Colors.white),
-                                                  Text(
-                                                    "${ad.enginecapacity}cc",
-                                                    style: TextStyle(
-                                                      fontWeight: FontWeight.w500,
-                                                      fontSize: 10.sp,
-                                                      color: Colors.white
+                                              Container(
+                                                width: (MediaQuery.of(context).size.width - 48.w) / 3,
+                                                height: 40.h,
+                                                padding: EdgeInsets.symmetric(horizontal: 6.w),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.black54,
+                                                  borderRadius: BorderRadius.circular(21.r),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(Icons.speed, color: Colors.white, size: 16.sp),
+                                                    SizedBox(width: 4.w),
+                                                    Expanded(
+                                                      child: Text(
+                                                        "${ad.enginecapacity}cc",
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: TextStyle(
+                                                          fontWeight: FontWeight.w500,
+                                                          fontSize: 10.sp,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        )
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 12.h),
                                       ],
                                     )
                                   ),
@@ -502,7 +567,7 @@ class _CarListingPage extends State<CarListingPage> {
           ],
         ),
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 16.0),
+          padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 8.0),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(25),
             child: BackdropFilter(
