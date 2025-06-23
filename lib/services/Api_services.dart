@@ -59,6 +59,9 @@ class ApiServices {
 
         // Save JWT token securely
         await storage.write(key: "jwt_key", value: token);
+        
+        // Save user data securely for persistence
+        await storage.write(key: "user_data", value: jsonEncode(data));
 
         // Save user in provider
         Provider.of<UserProvider>(context, listen: false).setUserFromJson(data);
@@ -77,35 +80,31 @@ class ApiServices {
       };
     }
   }
-  //
-  // /// Verify token (for persistent login)
-  // Future<bool> isLoggedIn(BuildContext context) async {
-  //   final token = await storage.read(key: "jwt_key");
-  //   if (token == null) return false;
-  //
-  //   final url = Uri.parse("$baseurl/api/verifyToken");
-  //
-  //   try {
-  //     final response = await http.get(
-  //       url,
-  //       headers: {"Authorization": "Bearer $token"},
-  //     );
-  //
-  //     if (response.statusCode == 200) {
-  //       final data = jsonDecode(response.body);
-  //       Provider.of<UserProvider>(context, listen: false).setUserFromJson(data);
-  //       return true;
-  //     } else {
-  //       await logout(); // Token invalid or expired
-  //       return false;
-  //     }
-  //   } catch (e) {
-  //     return false;
-  //   }
-  // }
-  //
-  // /// Logout - clears secure token
-  // Future<void> logout() async {
-  //   await storage.delete(key: "jwt_key");
-  // }
+
+  /// Check if user is logged in (without server verification)
+  Future<bool> isLoggedIn(BuildContext context) async {
+    final token = await storage.read(key: "jwt_key");
+    if (token == null) return false;
+
+    // If token exists, consider user logged in
+    // You can add basic token validation here if needed
+    try {
+      // Basic check - if token exists and is not empty
+      if (token.isNotEmpty) {
+        return true;
+      } else {
+        await logout();
+        return false;
+      }
+    } catch (e) {
+      await logout();
+      return false;
+    }
+  }
+
+  /// Logout - clears secure token and user data
+  Future<void> logout() async {
+    await storage.delete(key: "jwt_key");
+    await storage.delete(key: "user_data");
+  }
 }
