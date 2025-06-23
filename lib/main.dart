@@ -6,6 +6,7 @@ import 'package:pakwheels/AppScreens/SignUp.dart';
 import 'package:pakwheels/AppScreens/car_listing.dart';
 import 'package:pakwheels/AppScreens/cardetails_page.dart';
 import 'package:pakwheels/AppScreens/demo%20project.dart';
+import 'package:pakwheels/AppScreens/initialize.dart';
 import 'package:pakwheels/providers/Car_ad_provider.dart';
 import 'package:pakwheels/providers/User_Provider.dart';
 import 'package:pakwheels/providers/search_provider.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Poppins',
           ),
           debugShowCheckedModeBanner: false,
-          home: CarListingPage(),
+          home: InitialWrapper(),
         );
       },
     );
