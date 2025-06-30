@@ -5,6 +5,7 @@ import 'package:pakwheels/services/Api_services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'SignUp.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:pakwheels/utils/page_routes.dart';
 
 import 'car_listing.dart';
 
@@ -38,7 +39,7 @@ ApiServices apiServices=ApiServices();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text("Logged in successfully")));
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>CarListingPage()));
+          Navigator.push(context, SlideRightRoute(page: CarListingPage()));
         }
       }
     } catch (err) {
@@ -83,7 +84,7 @@ body: Container(
           padding:  EdgeInsets.symmetric(horizontal: 15.w,vertical: 10.h),
           child: InkWell(
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> IntroPage()));
+              Navigator.push(context, SlideLeftRoute(page: IntroPage()));
             },
             child: Icon(
               Icons.arrow_back, // left arrow icon
