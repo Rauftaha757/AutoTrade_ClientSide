@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pakwheels/AppScreens/SignIn.dart';
 import 'package:pakwheels/AppScreens/SignUp.dart';
+import 'package:pakwheels/utils/page_routes.dart';
 
 class IntroPage extends StatefulWidget{
   @override
@@ -43,7 +44,7 @@ class _IntroPage extends State<IntroPage>{
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+                        Navigator.push(context, SlideRightRoute(page: LoginPage()));
                       },
                       child: Text(
                         'Login',
@@ -67,7 +68,7 @@ class _IntroPage extends State<IntroPage>{
                       ),
                     ),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>SignupPage()));
+                      Navigator.push(context, SlideRightRoute(page: SignupPage()));
                     },
                     child: Text(
                       'Register',
