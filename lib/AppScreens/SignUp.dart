@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pakwheels/AppScreens/SignIn.dart';
 import 'package:pakwheels/services/Api_services.dart';
+import 'package:pakwheels/utils/page_routes.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -32,7 +33,7 @@ setState(() {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Sign up successfully")),
         );
-     Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginPage()));
+     Navigator.push(context, SlideRightRoute(page: LoginPage()));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(result['message'] ?? "Signup failed")),
