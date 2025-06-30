@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:pakwheels/services/CarAd_api.dart';
 import 'package:pakwheels/services/Api_services.dart';
 import 'package:pakwheels/AppScreens/SignIn.dart';
+import 'package:pakwheels/utils/page_routes.dart';
 
 import 'cardetails_page.dart';
 
@@ -192,7 +193,7 @@ class _CarListingPage extends State<CarListingPage> {
                                   // Navigate to login page
                                   Navigator.pushAndRemoveUntil(
                                     context,
-                                    MaterialPageRoute(builder: (context) => LoginPage()),
+                                    FadeRoute(page: LoginPage()),
                                     (route) => false,
                                   );
                                 },
@@ -406,9 +407,7 @@ class _CarListingPage extends State<CarListingPage> {
                                   onTap: () {
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Detailspage(car: ad),
-                                      ),
+                                      ScaleRoute(page: Detailspage(car: ad)),
                                     );
                                   },
                                   child: Container(
@@ -468,92 +467,97 @@ class _CarListingPage extends State<CarListingPage> {
                                         SizedBox(height: 16.h),
                                         Padding(
                                           padding: EdgeInsets.symmetric(horizontal: 10.r, vertical: 8.h),
-                                          child: Wrap(
-                                            spacing: 8.w,
-                                            runSpacing: 8.h,
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Container(
-                                                width: (MediaQuery.of(context).size.width - 48.w) / 3,
-                                                height: 40.h,
-                                                padding: EdgeInsets.symmetric(horizontal: 6.w),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.black54,
-                                                  borderRadius: BorderRadius.circular(21.r),
-                                                ),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Icon(Icons.add_road_outlined, color: Colors.white, size: 16.sp),
-                                                    SizedBox(width: 4.w),
-                                                    Expanded(
-                                                      child: Text(
-                                                        "${ad.milage}Km",
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: TextStyle(
-                                                          fontWeight: FontWeight.w500,
-                                                          fontSize: 10.sp,
-                                                          color: Colors.white,
+                                              Expanded(
+                                                child: Container(
+                                                  height: 40.h,
+                                                  margin: EdgeInsets.symmetric(horizontal: 4.w),
+                                                  padding: EdgeInsets.symmetric(horizontal: 6.w),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.black54,
+                                                    borderRadius: BorderRadius.circular(21.r),
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(Icons.add_road_outlined, color: Colors.white, size: 16.sp),
+                                                      SizedBox(width: 4.w),
+                                                      Expanded(
+                                                        child: Text(
+                                                          "${ad.milage}Km",
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: TextStyle(
+                                                            fontWeight: FontWeight.w500,
+                                                            fontSize: 10.sp,
+                                                            color: Colors.white,
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
-                                              Container(
-                                                width: (MediaQuery.of(context).size.width - 48.w) / 3,
-                                                height: 40.h,
-                                                padding: EdgeInsets.symmetric(horizontal: 6.w),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.black54,
-                                                  borderRadius: BorderRadius.circular(21.r),
-                                                ),
-                                                child: Row(
-                                                  children: [
-                                                    Icon(Icons.color_lens, color: Colors.white, size: 16.sp),
-                                                    SizedBox(width: 4.w),
-                                                    Expanded(
-                                                      child: Text(
-                                                        "${ad.color.toUpperCase()}",
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: TextStyle(
-                                                          fontWeight: FontWeight.w500,
-                                                          fontSize: 10.sp,
-                                                          color: Colors.white,
+                                              Expanded(
+                                                child: Container(
+                                                  height: 40.h,
+                                                  margin: EdgeInsets.symmetric(horizontal: 4.w),
+                                                  padding: EdgeInsets.symmetric(horizontal: 6.w),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.black54,
+                                                    borderRadius: BorderRadius.circular(21.r),
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(Icons.color_lens, color: Colors.white, size: 16.sp),
+                                                      SizedBox(width: 4.w),
+                                                      Expanded(
+                                                        child: Text(
+                                                          "${ad.color.toUpperCase()}",
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: TextStyle(
+                                                            fontWeight: FontWeight.w500,
+                                                            fontSize: 10.sp,
+                                                            color: Colors.white,
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
-                                              Container(
-                                                width: (MediaQuery.of(context).size.width - 48.w) / 3,
-                                                height: 40.h,
-                                                padding: EdgeInsets.symmetric(horizontal: 6.w),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.black54,
-                                                  borderRadius: BorderRadius.circular(21.r),
-                                                ),
-                                                child: Row(
-                                                  children: [
-                                                    Icon(Icons.speed, color: Colors.white, size: 16.sp),
-                                                    SizedBox(width: 4.w),
-                                                    Expanded(
-                                                      child: Text(
-                                                        "${ad.enginecapacity}cc",
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: TextStyle(
-                                                          fontWeight: FontWeight.w500,
-                                                          fontSize: 10.sp,
-                                                          color: Colors.white,
+                                              Expanded(
+                                                child: Container(
+                                                  height: 40.h,
+                                                  margin: EdgeInsets.symmetric(horizontal: 4.w),
+                                                  padding: EdgeInsets.symmetric(horizontal: 6.w),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.black54,
+                                                    borderRadius: BorderRadius.circular(21.r),
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(Icons.speed, color: Colors.white, size: 16.sp),
+                                                      SizedBox(width: 4.w),
+                                                      Expanded(
+                                                        child: Text(
+                                                          "${ad.enginecapacity}cc",
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: TextStyle(
+                                                            fontWeight: FontWeight.w500,
+                                                            fontSize: 10.sp,
+                                                            color: Colors.white,
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ],
                                           ),
                                         ),
+
                                         SizedBox(height: 12.h),
                                       ],
                                     )
@@ -587,7 +591,7 @@ class _CarListingPage extends State<CarListingPage> {
                         IconButton(
                           icon: const Icon(Icons.home, color: Colors.white),
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>CarListingPage()));
+                            Navigator.push(context, SlideRightRoute(page: CarListingPage()));
                           },
                         ),
                         Container(
@@ -608,7 +612,7 @@ class _CarListingPage extends State<CarListingPage> {
                             child: InkWell(
                               borderRadius: BorderRadius.circular(30),
                               onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>PublishAdScreen()));
+                                Navigator.push(context, SlideUpRoute(page: PublishAdScreen()));
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(12.0),
