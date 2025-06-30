@@ -5,6 +5,7 @@ import 'package:pakwheels/AppScreens/car_listing.dart';
 import 'package:provider/provider.dart';
 import '../services/Api_services.dart';
 import '../providers/User_Provider.dart';
+import '../utils/page_routes.dart';
 import 'dart:convert';
 
 class InitialWrapper extends StatefulWidget {
@@ -43,12 +44,12 @@ class _InitialWrapperState extends State<InitialWrapper> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => CarListingPage()),
+          FadeRoute(page: CarListingPage()),
         );
       } else {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
+          FadeRoute(page: LoginPage()),
         );
       }
     } catch (e) {
@@ -56,7 +57,7 @@ class _InitialWrapperState extends State<InitialWrapper> {
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
+        FadeRoute(page: LoginPage()),
       );
     } finally {
       if (mounted) {
